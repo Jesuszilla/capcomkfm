@@ -121,6 +121,10 @@ victory7 = "なんだと！彼女はここにもいないと？"
 ; var(1)  - Used in kfm.cmd for combo condition (updated every tick)
 ; var(2)  - Used in Kung Fu Throw (state 800) to remember if fwd was being
 ;           held (remembered from state 800 through state 810).
+; var(22) - Used to determine the strength of the button press (0: L,1: M,2: H)
+; var(46) - Used to determine button priority (regular button presses should
+;           take precedence over negative button presses, kicks should prioritize
+;           over punches)
 
 
 ;---------------------------------------------------------------------------

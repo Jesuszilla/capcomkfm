@@ -437,6 +437,61 @@ time = 1
 
 ; Don't remove the following line. It's required by the CMD standard.
 [Statedef -1]
+ ;#region conflict_check.cmd
+;---------------------------------------------------------------------------
+; Conflict Check
+[State -1, P]
+type = VarSet
+triggerall = !AILevel
+triggerall = NumHelper(10371)
+; Correspond to LP, MP, HP (x, y, z)
+trigger1 = (helper(10371), Var(0) = [1,2]) || (helper(10371), Var(1) = [1,2]) || (helper(10371), Var(2) = [1,2])
+; Correspond to -LP, -MP, -HP (~x, ~y, ~z) when custom combo is not activated
+trigger2 = !Var(30) ; You can remove this if you don't plan to implement custom combo
+trigger2 = (helper(10371), Var(7) = [1,2]) || (helper(10371), Var(8) = [1,2]) || (helper(10371), Var(9) = [1,2])
+var(46) = 1
+ignorehitpause = 1
+[State -1, K]
+type = VarSet
+triggerall = !AILevel
+triggerall = NumHelper(10371)
+; Correspond to LK, MK, HK (a, b, c)
+trigger1 = (helper(10371), Var(3) = [1,2]) || (helper(10371), Var(4) = [1,2]) || (helper(10371), Var(5) = [1,2])
+; Correspond to -LK, -MK, -HK (~a, ~b, ~c) when custom combo is not activated
+trigger2 = !Var(30) ; You can remove this if you don't plan to implement custom combo
+trigger2 = (helper(10371), Var(10) = [1,2]) || (helper(10371), Var(11) = [1,2]) || (helper(10371), Var(12) = [1,2])
+var(46) = 0
+ignorehitpause = 1
+
+; The first set of parentheses in this trigger1 means that a LP should beat a ~LK. The rest of the priorities are
+; then established. Refer to buffering.vns for a mapping of these variables to their buttons.
+[State -1, P beats ~K]
+type = VarSet
+triggerall = !AILevel
+triggerall = !Var(30)
+triggerall = NumHelper(10371)
+triggerall = (helper(10371), Var(0) = [1,2]) || (helper(10371), Var(1) = [1,2]) || (helper(10371), Var(2) = [1,2])
+trigger1 = (helper(10371), Var(0) >= helper(10371), Var(10)) || (helper(10371), Var(0) >= helper(10371), Var(11))
+trigger2 = (helper(10371), Var(0) >= helper(10371), Var(12)) || (helper(10371), Var(1) >= helper(10371), Var(10))
+trigger3 = (helper(10371), Var(1) >= helper(10371), Var(11)) || (helper(10371), Var(1) >= helper(10371), Var(12))
+trigger4 = (helper(10371), Var(2) >= helper(10371), Var(10)) || (helper(10371), Var(2) >= helper(10371), Var(11))
+trigger5 = (helper(10371), Var(2) >= helper(10371), Var(12))
+var(46) = 1
+ignorehitpause = 1
+[State -1, K beats ~P]
+type = VarSet
+triggerall = !AILevel
+triggerall = !Var(30)
+triggerall = NumHelper(10371)
+triggerall = (helper(10371), Var(3) = [1,2]) || (helper(10371), Var(4) = [1,2]) || (helper(10371), Var(5) = [1,2])
+trigger1 = (helper(10371), Var(3) >= helper(10371), Var(7)) || (helper(10371), Var(3) >= helper(10371), Var(9))
+trigger2 = (helper(10371), Var(3) >= helper(10371), Var(9)) || (helper(10371), Var(4) >= helper(10371), Var(7))
+trigger3 = (helper(10371), Var(4) >= helper(10371), Var(8)) || (helper(10371), Var(4) >= helper(10371), Var(9))
+trigger4 = (helper(10371), Var(5) >= helper(10371), Var(7)) || (helper(10371), Var(5) >= helper(10371), Var(8))
+trigger5 = (helper(10371), Var(5) >= helper(10371), Var(9))
+var(46) = 0
+ignorehitpause = 1
+;#endregion
 
 ;===========================================================================
 ;---------------------------------------------------------------------------
@@ -494,10 +549,23 @@ var(1) = 1
 ; Strength Variable
 [State -1, Strength]
 type = VarSet
+triggerall = !IsHelper
 trigger1 = NumHelper(10371)
 ; Corresponds to the following:
 ; var(22) = cond(command="y" || command="release_y" || command = "b" || command = "release_b", 1, 0)
 var(22) = cond(helper(10371), Var(1) || helper(10371), Var(8) || helper(10371), Var(4) || helper(10371), Var(11), 1, 0)
+
+;---------------------------------------------------------------------------
+;Kung Fu Upper/Kung Fu Blow
+[State -1, Kung Fu Upper/Kung Fu Blow]
+type = ChangeState
+value = ifElse(Var(46), 1100+Var(22)*10, 1200+Var(22)*10)
+triggerall = NumHelper(10371)
+; Corresponds to command = "F,D,DF"
+triggerall = (helper(10371), Var(22)&(2**7 - 1)) > (2**6)
+; Corresponds to command = "x" || command = "y"  || command = "a" || command = "b" || command = "release_x" || command = "release_y" || command = "release_a" || command = "release_b"
+triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Var(3) || helper(10371), Var(4) || helper(10371), Var(7) || helper(10371), Var(8) || helper(10371), Var(10) || helper(10371), Var(11)
+trigger1 = var(1) ;Use combo condition (above)
 
 ;---------------------------------------------------------------------------
 ; Kung Fu Knee
@@ -506,20 +574,20 @@ type = ChangeState
 value = 1050+Var(22)*10
 triggerall = NumHelper(10371)
 ; Corresponds to command = "FF"
-triggerall = helper(10371), Var(55)
+triggerall = (helper(10371), Var(24)&(2**6 - 1)) > (2**5)
 triggerall = helper(10371), Var(3) || helper(10371), Var(4) || helper(10371), Var(10) || helper(10371), Var(11)
 trigger1 = var(1) ;Use combo condition (above)
 
 ;---------------------------------------------------------------------------
-;Strong Kung Fu Palm
-[State -1, Strong Kung Fu Palm]
+;Kung Fu Palm/Kung Fu Zankou
+[State -1, Kung Fu Palm/Kung Fu Zankou]
 type = ChangeState
-value = 1000+Var(22)*10
+value = ifElse(Var(46), 1000+Var(22)*10, 1400+Var(22)*10)
 triggerall = NumHelper(10371)
 ; Corresponds to command = "QCF"
 triggerall = (helper(10371), Var(21)&(2**7 - 1)) > (2**6)
-; Corresponds to command = "x" || command = "y" || command = "release_x" || command = "release_y"
-triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Var(7) || helper(10371), Var(8)
+; Corresponds to command = "x" || command = "y"  || command = "a" || command = "b" || command = "release_x" || command = "release_y" || command = "release_a" || command = "release_b"
+triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Var(3) || helper(10371), Var(4) || helper(10371), Var(7) || helper(10371), Var(8) || helper(10371), Var(10) || helper(10371), Var(11)
 trigger1 = var(1) ;Use combo condition (above)
 
 ;---------------------------------------------------------------------------
@@ -608,31 +676,6 @@ trigger1 = var(1) ;Use combo condition (above)
 ;trigger1 = statetype = A
 ;trigger2 = stateno = 1350
 ;trigger2 = time > 0
-
-;---------------------------------------------------------------------------
-;Far Kung Fu Zankou
-;[State -1, Far Kung Fu Zankou]
-;type = ChangeState
-;value = 1420
-;triggerall = command = "QCF_ab"
-;triggerall = power >= 330
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Light Kung Fu Zankou
-;[State -1, Light Kung Fu Zankou]
-;type = ChangeState
-;value = 1400
-;triggerall = command = "QCF_a"
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Strong Kung Fu Zankou
-;[State -1, Strong Kung Fu Zankou]
-;type = ChangeState
-;value = 1410
-;triggerall = command = "QCF_b"
-;trigger1 = var(1) ;Use combo condition (above)
 
 ;===========================================================================
 ;---------------------------------------------------------------------------

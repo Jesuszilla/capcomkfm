@@ -48,11 +48,18 @@ pos = Const(size.mid.pos.x),Const(size.mid.pos.y)
 ignorehitpause = 1
 
 [State 10371, P]
-type = DisplayToClipboard
+type = null;DisplayToClipboard
 trigger1 = 1
 text = "X %d  -X = %d | Y = %d  -Y = %d | Z = %d  -Z = %d"
 params = var(0),var(7),var(1),var(8),var(2),var(9)
 ignorehitpause = 1
+[State 10371, K]
+type = DisplayToClipboard
+trigger1 = 1
+text = "var(22) = %d"
+params = var(22)
+ignorehitpause = 1
+
 [State 10371, K]
 type = null;DisplayToClipboard
 trigger1 = 1
@@ -344,12 +351,6 @@ type = VarAdd
 trigger1 = var(22)
 var(22) = -1
 
-[State 10371, rDP Dec]
-type = VarAdd
-;triggerall = root, HitPauseTime = 0
-trigger1 = var(26)
-var(26) = -1
-
 [State 10371, QCF Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
@@ -361,6 +362,12 @@ type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(23)
 var(23) = -1
+
+[State 10371, FF Dec]
+type = VarAdd
+;triggerall = root, HitPauseTime = 0
+trigger1 = var(24)
+var(24) = -1
 
 ;#region cvs2_buffer_init.vns
 ;--------------------------[BUFFER DEFINITION]---------------------------------;
@@ -715,8 +722,7 @@ var(38) = 2 ;& (var(2) := 3) & (var(5) := 3)
 ;var(21)  = QCF
 ;var(22)  = DP
 ;var(23)  = QCB
-;var(24)  = HCB
-;var(25)  = HCF
+;var(24)  = FF
 ;var(40)  = QCFx2
 ;var(41)  = QCBx2
 
@@ -777,7 +783,6 @@ trigger3 = e||(var(22) := 9 + (2**6))
 trigger4 = Var(22) && (Var(22)&15) = 0
 trigger4 = e||(var(22) := 0)
 ignorehitpause = 1
-
 [State 10371, QCF Init]
 type = Null
 ; The first command is stored in the 5th bit (2**4), 0001 1001
@@ -812,8 +817,14 @@ trigger4 = Var(23) && (Var(23)&15) = 0
 trigger4 = e||(var(23) := 0)
 ignorehitpause = 1
 
+[State 10371, FF Init]
+type = Null
+trigger1 = !Var(24) && cond(p2dist X >= 0, command = "holdfwd_r", command = "holdback_r")
+trigger1 = e||(var(24) := 9 + (2**4))
 
+trigger2 = (Var(24)&(2**5 - 1)) > (2**4) && cond(p2dist X >= 0, command = "parry", command = "back")
+trigger2 = e||(var(24) := 9 + (2**5))
 
-
-
-
+trigger3 = Var(23) && (Var(24)&15) = 0
+trigger3 = e||(var(24) := 0)
+ignorehitpause = 1
