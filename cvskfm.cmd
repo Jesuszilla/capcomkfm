@@ -496,32 +496,38 @@ ignorehitpause = 1
 ;===========================================================================
 ;---------------------------------------------------------------------------
 ;Smash Kung Fu Upper (uses one super bar)
-;[State -1, Smash Kung Fu Upper]
-;type = ChangeState
-;value = 3050
-;triggerall = command = "SmashKFUpper"
-;triggerall = power >= 1000
-;triggerall = statetype != A
-;trigger1 = ctrl
-;trigger2 = hitdefattr = SC, NA, SA, HA
-;trigger2 = stateno != [3050,3100)
-;trigger2 = movecontact
-;trigger3 = stateno = 1310 || stateno = 1330 ;From blocking
+[State -1, Smash Kung Fu Upper]
+type = ChangeState
+value = 3050
+; Corresponds to command = "D,DB,B,D,DB,B"
+triggerall = (helper(10371), Var(41)&(2**9 - 1)) > (2**8)
+; Corresponds to command = "x" || command = "y"  || command = "release_x" || command = "release_y"
+triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Var(7) || helper(10371), Var(8)
+triggerall = power >= 1000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = hitdefattr = SC, NA, SA, HA
+trigger2 = stateno != [3050,3100)
+trigger2 = movecontact
+trigger3 = stateno = 1310 || stateno = 1330 ;From blocking
 
 ;---------------------------------------------------------------------------
 ;Triple Kung Fu Palm (uses one super bar)
-;[State -1, Triple Kung Fu Palm]
-;type = ChangeState
-;value = 3000
-;triggerall = command = "TripleKFPalm"
-;triggerall = power >= 1000
-;trigger1 = statetype = S
-;trigger1 = ctrl
-;trigger2 = statetype != A
-;trigger2 = hitdefattr = SC, NA, SA, HA
-;trigger2 = stateno != [3000,3050)
-;trigger2 = movecontact
-;trigger3 = stateno = 1310 || stateno = 1330 ;From blocking
+[State -1, Triple Kung Fu Palm]
+type = ChangeState
+value = 3000
+; Corresponds to command = "D,DF,F,D,DF,F"
+triggerall = (helper(10371), Var(40)&(2**9 - 1)) > (2**8)
+; Corresponds to command = "x" || command = "y"  || command = "release_x" || command = "release_y"
+triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Var(7) || helper(10371), Var(8)
+triggerall = power >= 1000
+trigger1 = statetype = S
+trigger1 = ctrl
+trigger2 = statetype != A
+trigger2 = hitdefattr = SC, NA, SA, HA
+trigger2 = stateno != [3000,3050)
+trigger2 = movecontact
+trigger3 = stateno = 1310 || stateno = 1330 ;From blocking
 
 
 ;===========================================================================
