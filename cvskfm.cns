@@ -3464,8 +3464,8 @@ ctrl = 1
 [State -3, DTC]
 type = DisplayToClipboard
 trigger1 = 1
-text = "Dizzy Time = %d"
-params = sysvar(0)
+text = "Dizzy Time = %d, Var(1) = %d"
+params = sysvar(0), Var(1)
 ignorehitpause = 1
 
 ;----------------------------------------------------------------------------------

@@ -531,7 +531,7 @@ ignorehitpause = 1
 ;redundant logic.
 [State -1, Combo condition Reset]
 type = VarSet
-trigger1 = 1
+trigger1 = !IsHelper
 var(1) = 0
 
 [State -1, Combo condition Check]
@@ -560,6 +560,7 @@ var(22) = cond(helper(10371), Var(1) || helper(10371), Var(8) || helper(10371), 
 [State -1, Kung Fu Upper/Kung Fu Blow]
 type = ChangeState
 value = ifElse(Var(46), 1100+Var(22)*10, 1200+Var(22)*10)
+triggerall = !IsHelper
 triggerall = NumHelper(10371)
 ; Corresponds to command = "F,D,DF"
 triggerall = (helper(10371), Var(22)&(2**7 - 1)) > (2**6)
@@ -568,21 +569,11 @@ triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Va
 trigger1 = var(1) ;Use combo condition (above)
 
 ;---------------------------------------------------------------------------
-; Kung Fu Knee
-[State -1, Kung Fu Knee]
-type = ChangeState
-value = 1050+Var(22)*10
-triggerall = NumHelper(10371)
-; Corresponds to command = "FF"
-triggerall = (helper(10371), Var(24)&(2**6 - 1)) > (2**5)
-triggerall = helper(10371), Var(3) || helper(10371), Var(4) || helper(10371), Var(10) || helper(10371), Var(11)
-trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
 ;Kung Fu Palm/Kung Fu Zankou
 [State -1, Kung Fu Palm/Kung Fu Zankou]
 type = ChangeState
 value = ifElse(Var(46), 1000+Var(22)*10, 1400+Var(22)*10)
+triggerall = !IsHelper
 triggerall = NumHelper(10371)
 ; Corresponds to command = "QCF"
 triggerall = (helper(10371), Var(21)&(2**7 - 1)) > (2**6)
@@ -591,91 +582,16 @@ triggerall = helper(10371), Var(0) || helper(10371), Var(1) || helper(10371), Va
 trigger1 = var(1) ;Use combo condition (above)
 
 ;---------------------------------------------------------------------------
-;Fast Kung Fu Upper (1/3 super bar)
-;[State -1, Fast Kung Fu Upper]
-;type = ChangeState
-;value = 1120
-;triggerall = command = "upper_xy"
-;triggerall = power >= 330
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Light Kung Fu Upper
-;[State -1, Light Kung Fu Upper]
-;type = ChangeState
-;value = 1100
-;triggerall = command = "upper_x"
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Strong Kung Fu Upper
-;[State -1, Strong Kung Fu Upper]
-;type = ChangeState
-;value = 1110
-;triggerall = command = "upper_y"
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Fast Kung Fu Blow (1/3 super bar)
-;[State -1, Fast Kung Fu Blow]
-;type = ChangeState
-;value = 1220
-;triggerall = command = "QCB_xy"
-;triggerall = power >= 330
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Light Kung Fu Blow
-;[State -1, Light Kung Fu Blow]
-;type = ChangeState
-;value = 1200
-;triggerall = command = "QCB_x"
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;Strong Kung Fu Blow
-;[State -1, Strong Kung Fu Blow]
-;type = ChangeState
-;value = 1210
-;triggerall = command = "QCB_y"
-;trigger1 = var(1) ;Use combo condition (above)
-
-;---------------------------------------------------------------------------
-;High Kung Fu Blocking (High)
-;[State -1, High Kung Fu Blocking High]
-;type = ChangeState
-;value = 1300
-;triggerall = command = "blocking"
-;triggerall = command != "holddown"
-;trigger1 = ctrl
-;trigger1 = statetype != A
-;trigger2 = stateno = 1310 || stateno = 1330
-;trigger2 = time > 0
-
-;---------------------------------------------------------------------------
-;High Kung Fu Blocking (Low)
-;[State -1, High Kung Fu Blocking Low]
-;type = ChangeState
-;value = 1320
-;triggerall = command = "blocking"
-;triggerall = command = "holddown"
-;trigger1 = ctrl
-;trigger1 = statetype != A
-;trigger2 = stateno = 1310 || stateno = 1330
-;trigger2 = time > 0
-
-;---------------------------------------------------------------------------
-;High Kung Fu Blocking (Air)
-;[State -1, High Kung Fu Blocking Low]
-;type = ChangeState
-;value = 1340
-;triggerall = command = "blocking"
-;triggerall = command != "holdup"
-;triggerall = command != "holddown"
-;trigger1 = ctrl
-;trigger1 = statetype = A
-;trigger2 = stateno = 1350
-;trigger2 = time > 0
+; Kung Fu Knee
+[State -1, Kung Fu Knee]
+type = ChangeState
+value = 1050
+triggerall = !IsHelper
+triggerall = NumHelper(10371)
+; Corresponds to command = "FF"
+triggerall = (helper(10371), Var(24)&(2**6 - 1)) > (2**5)
+triggerall = helper(10371), Var(3) || helper(10371), Var(4) || helper(10371), Var(10) || helper(10371), Var(11)
+trigger1 = var(1) ;Use combo condition (above)
 
 ;===========================================================================
 ;---------------------------------------------------------------------------
@@ -683,8 +599,9 @@ trigger1 = var(1) ;Use combo condition (above)
 [State -1, Run Fwd]
 type = ChangeState
 value = 100
-trigger1 = numHelper(10371)
-trigger1 = helper(10371), Var(55) = [1,3]
+triggerall = roundstate = 2
+triggerall = numHelper(10371)
+triggerall = helper(10371), Var(55) = [1,3]
 trigger1 = statetype = S
 trigger1 = ctrl
 
@@ -693,8 +610,9 @@ trigger1 = ctrl
 [State -1, Run Back]
 type = ChangeState
 value = 105
-trigger1 = numHelper(10371)
-trigger1 = helper(10371), Var(56) = [1,3]
+triggerall = roundstate = 2
+triggerall = numHelper(10371)
+triggerall = helper(10371), Var(56) = [1,3]
 trigger1 = statetype = S
 trigger1 = ctrl
 
@@ -703,18 +621,15 @@ trigger1 = ctrl
 [State -1, Kung Fu Throw]
 type = ChangeState
 value = 800
-triggerall = command = "y"
 triggerall = statetype = S
 triggerall = ctrl
 triggerall = stateno != 100
-trigger1 = command = "holdfwd"
-trigger1 = p2bodydist X < 3
-trigger1 = (p2statetype = S) || (p2statetype = C)
-trigger1 = p2movetype != H
-trigger2 = command = "holdback"
-trigger2 = p2bodydist X < 5
-trigger2 = (p2statetype = S) || (p2statetype = C)
-trigger2 = p2movetype != H
+triggerall = numHelper(10371)
+triggerall = p2bodydist X = [-20,20]
+triggerall = (helper(10371), command = "holdback") || (helper(10371), command = "holdfwd")
+triggerall = helper(10371), Var(1) || helper(10371), Var(4)
+trigger1 = p2statetype = S || p2statetype = C
+trigger1 = p2movetype != H || Var(30) ; You can remove var(30) if you're not using custom combo
 
 ;---------------------------------------------------------------------------
 ;Taunt
@@ -746,7 +661,6 @@ trigger3 = (stateno = 230) && time > 6
 [State -1, Stand Strong Punch]
 type = ChangeState
 value = 210
-triggerall = !IsHelper
 triggerall = numHelper(10371)
 triggerall = helper(10371), var(1)
 triggerall = helper(10371), command != "holddown"
@@ -861,7 +775,7 @@ trigger3 = stateno = 1350 ;Air blocking
 ;Jump Light Kick
 [State -1, Jump Light Kick]
 type = ChangeState
-value = 6302
+value = 630
 triggerall = numHelper(10371)
 triggerall = helper(10371), var(3)
 trigger1 = statetype = A

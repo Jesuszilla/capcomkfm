@@ -48,15 +48,15 @@ pos = Const(size.mid.pos.x),Const(size.mid.pos.y)
 ignorehitpause = 1
 
 [State 10371, P]
-type = null;DisplayToClipboard
+type = DisplayToClipboard
 trigger1 = 1
 text = "X %d  -X = %d | Y = %d  -Y = %d | Z = %d  -Z = %d"
 params = var(0),var(7),var(1),var(8),var(2),var(9)
 ignorehitpause = 1
 [State 10371, K]
-type = DisplayToClipboard
+type = AppendToClipboard
 trigger1 = 1
-text = "var(22) = %d"
+text = "\nvar(22) = %d"
 params = var(22)
 ignorehitpause = 1
 
@@ -74,14 +74,14 @@ text = "U = %d  D = %d  F = %d   B = %d\n"
 params = var(14),var(15),var(16),var(17)
 ignorehitpause = 1
 [State 10371, AM I WORKING ?]
-type = null;AppendToClipboard
+type = AppendToClipboard
 trigger1 = 1
 text = "\n             -F = %d  -B = %d Var(51) = %d"
 params = var(18),var(19),var(51)
 ignorehitpause = 1
 
 [State 10371, AM I WORKING ?]
-type = null;AppendToClipboard
+type = null;1DisplayToClipboard
 trigger1 = 1
 text = "DD = %d  FF = %d  BB = %d  POW = %d"
 params = var(54),var(55),var(56),var(28)
@@ -128,88 +128,102 @@ fvar(30) = root,Var(30)
 [State 10371, LP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(0)
+trigger1 = var(0) > 0
 var(0) = -1
+ignorehitpause = 1
 
 [State 10371, MP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(1)
+trigger1 = var(1) > 0
 var(1) = -1
+ignorehitpause = 1
 
 [State 10371, HP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(2)
+trigger1 = var(2) > 0
 var(2) = -1
+ignorehitpause = 1
 
 [State 10371, LK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(3)
+trigger1 = var(3) > 0
 var(3) = -1
+ignorehitpause = 1
 
 [State 10371, MK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(4)
+trigger1 = var(4) > 0
 var(4) = -1
+ignorehitpause = 1
 
 [State 10371, HK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(5)
+trigger1 = var(5) > 0
 var(5) = -1
+ignorehitpause = 1
 
 [State 10371, START Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(6)
+trigger1 = var(6) > 0
 var(6) = -1
+ignorehitpause = 1
 
 ;NEGATIVE EDGE SETS:
 
 [State 10371, NEG LP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(7) && !var(0)
+trigger1 = var(7) > 0 && !var(0)
 var(7) = -1
+ignorehitpause = 1
 
 [State 10371, NEG MP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(8) && !var(1)
+trigger1 = var(8) > 0 && !var(1)
 var(8) = -1
+ignorehitpause = 1
 
 [State 10371, NEG HP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(9) && !var(2)
+trigger1 = var(9) > 0 && !var(2)
 var(9) = -1
+ignorehitpause = 1
 
 [State 10371, NEG LK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(10) && !var(3)
+trigger1 = var(10) > 0 && !var(3)
 var(10) = -1
+ignorehitpause = 1
 
 [State 10371, NEG MK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(11) && !var(4)
+trigger1 = var(11) > 0 && !var(4)
 var(11) = -1
+ignorehitpause = 1
 
 [State 10371, NEG HK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(12) && !var(5)
+trigger1 = var(12) > 0 && !var(5)
 var(12) = -1
+ignorehitpause = 1
 
 [State 10371, NEG START Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
-trigger1 = var(13) && !var(6)
+trigger1 = var(13) > 0 && !var(6)
 var(13) = -1
+ignorehitpause = 1
 
 ;---------------------------------[DIRECTIONS]---------------------------------;
 ;DIRECTIONAL:
@@ -226,40 +240,49 @@ var(13) = -1
 type = VarAdd
 trigger1 = var(14)>0
 var(14) = -1
+ignorehitpause = 1
 [State 10371, DOWN Dec]
 type = VarAdd
 trigger1 = var(15)>0
 var(15) = -1
+ignorehitpause = 1
 [State 10371, FWD Dec]
 type = VarAdd
 trigger1 = var(16)>0
 var(16) = -1
+ignorehitpause = 1
 [State 10371, BWD Dec]
 type = VarAdd
 trigger1 = var(17)>0
 var(17) = -1
+ignorehitpause = 1
 
 [State 10371, NEG FWD Dec]
 type = VarAdd
 trigger1 = var(18)>0
 var(18) = -1
+ignorehitpause = 1
 [State 10371, NEG BWD Dec]
 type = VarAdd
 trigger1 = var(19)>0
 var(19) = -1
+ignorehitpause = 1
 [State 10371, NEG DN Dec]
 type = VarAdd
 trigger1 = var(20)>0
 var(20) = -1
+ignorehitpause = 1
 
 [State 10371, FF Dec]
 type = VarAdd
 trigger1 = var(55)
 var(55) = -1
+ignorehitpause = 1
 [State 10371, BB Dec]
 type = VarAdd
 trigger1 = var(56)
 var(56) = -1
+ignorehitpause = 1
 
 ;------------------------------[MULTIPLE BUTTONS]------------------------------;
 ;DOUBLE BUTTON:
@@ -277,48 +300,57 @@ type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(30)
 var(30) = -1
+ignorehitpause = 1
 [State 10371, LP+HP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(31)
 var(31) = -1
+ignorehitpause = 1
 [State 10371, MP+HP Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(32)
 var(32) = -1
+ignorehitpause = 1
 
 [State 10371, LK+MK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(33)
 var(33) = -1
+ignorehitpause = 1
 [State 10371, LK+HK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(34)
 var(34) = -1
+ignorehitpause = 1
 [State 10371, MK+HK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(35)
 var(35) = -1
+ignorehitpause = 1
 
 [State 10371, LP+LK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(36)
 var(36) = -1
+ignorehitpause = 1
 [State 10371, MP+MK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(37)
 var(37) = -1
+ignorehitpause = 1
 [State 10371, HP+HK Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(38)
 var(38) = -1
+ignorehitpause = 1
 
 ;#endregion
 
@@ -337,12 +369,14 @@ type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(40)
 var(40) = -1
+ignorehitpause = 1
 
 [State 10371, QCBx2 Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(41)
 var(41) = -1
+ignorehitpause = 1
 
 ;------------------- SPECIALS -------------------------------------------------;
 [State 10371, DP Dec]
@@ -350,24 +384,28 @@ type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(22)
 var(22) = -1
+ignorehitpause = 1
 
 [State 10371, QCF Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(21)
 var(21) = -1
+ignorehitpause = 1
 
 [State 10371, QCB Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(23)
 var(23) = -1
+ignorehitpause = 1
 
 [State 10371, FF Dec]
 type = VarAdd
 ;triggerall = root, HitPauseTime = 0
 trigger1 = var(24)
 var(24) = -1
+ignorehitpause = 1
 
 ;#region cvs2_buffer_init.vns
 ;--------------------------[BUFFER DEFINITION]---------------------------------;
@@ -513,6 +551,7 @@ trigger2 = root, Var(1) > 0
 value = 0
 first = 55
 last = 56
+ignorehitpause = 1
 
 [State 10371, Reset X direction]
 type = VarRangeSet
@@ -521,12 +560,14 @@ trigger1 = root, P2Dist X < 0
 value = 0
 first = 16
 last = 17
+ignorehitpause = 1
 
 [State 10371, Hold DN]
 type = VarSet
 triggerall = Var(15) <= 0
 trigger1 = command != "holddown"
 var(15) = 0
+ignorehitpause = 1
 [State 10371, Hold FWD]
 type = VarSet
 triggerall = Var(16) <= 0
@@ -535,6 +576,7 @@ trigger1 = command != "holdfwd"
 trigger2 = p2dist X < 0
 trigger2 = command != "holdback"
 var(16) = 0
+ignorehitpause = 1
 [State 10371, Hold BWD]
 type = VarSet
 triggerall = Var(17) <= 0
@@ -543,26 +585,31 @@ trigger1 = command != "holdback"
 trigger2 = p2dist X < 0
 trigger2 = command != "holdfwd"
 var(17) = 0
+ignorehitpause = 1
 
 [State 0, Trigger Once]
 type = VarAdd
 trigger1 = root, P2Dist X < 0
 var(50) = 1
+ignorehitpause = 1
 [State 0, Trigger Once]
 type = VarSet
 trigger1 = root, P2Dist X >= 0
 var(50) = 0
+ignorehitpause = 1
 
 [State 10371, UP Init]
 type = VarSet
 triggerall = Var(14) = 0
 trigger1 = command = "rich" || command = "holdup"
 var(14) = 3
+ignorehitpause = 1
 [State 10371, DOWN Init]
 type = VarSet
 triggerall = Var(15) = 0
 trigger1 = command = "down2" || command = "holddown"
 var(15) = ifElse(Var(52), -1, 10+0*(var(52):=1))
+ignorehitpause = 1
 
 ; This is where it gets tricky
 [State 10371, FWD Init]
@@ -573,6 +620,7 @@ trigger1 = command = "parry" || command = "holdfwd_r"
 trigger2 = p2dist X < 0
 trigger2 = command = "back" || command = "holdback_r"
 var(16) = cond(Var(51), -1, 10+0*(var(51):=1)) ; I smoke crack
+ignorehitpause = 1
 
 [State 10371, BWD Init]
 type = VarSet
@@ -582,26 +630,31 @@ trigger1 = command = "back" || command = "holdback_r"
 trigger2 = p2dist X < 0
 trigger2 = command = "parry" || command = "holdfwd_r"
 var(17) = cond(Var(51), -1, 10+0*(var(51):=1))
+ignorehitpause = 1
 
 [State 10371, F/B Timer] ; Because fuck you, that's why
 type = VarSet
 trigger1 = command != "holdfwd_r" && command != "holdback_r"
 var(51) = 0
+ignorehitpause = 1
 [State 10371, Timer Inc]
 type = VarAdd
 trigger1 = Var(51)
 trigger1 = command = "holdfwd_r" ^^ command = "holdback_r"
 var(51) = 1
+ignorehitpause = 1
 
 [State 10371, DOWN Timer]
 type = VarSet
 trigger1 = command != "holddown"
 var(52) = 0
+ignorehitpause = 1
 [State 10371, Timer Inc]
 type = VarAdd
 trigger1 = Var(52)
 trigger1 = command = "holddown"
 var(52) = 1
+ignorehitpause = 1
 
 [State 10371, FF Init]
 type = VarSet
@@ -612,6 +665,7 @@ triggerall = Var(19) != [8,9]
 triggerall = Var(20) != [9,10]
 trigger1 = (Var(18) = [1,9]) && ifElse(p2Dist X < 0, command = "back", command = "parry")
 var(55) = 4
+ignorehitpause = 1
 [State 10371, BB Init]
 type = VarSet
 triggerall = !Var(56)
@@ -621,6 +675,7 @@ triggerall = Var(18) != [8,9]
 triggerall = Var(20) != [9,10]
 trigger1 = (Var(19) = [1,9]) && ifElse(p2Dist X < 0, command = "parry", command = "back")
 var(56) = 4
+ignorehitpause = 1
 
 ;---------------------------[MULTIPLE BUTTON BUFFER]---------------------------;
 ;DOUBLE BUTTON:
@@ -639,56 +694,68 @@ type = VarSet
 triggerall = !Var(30)
 trigger1 = (var(7) && var(8))
 var(30) = 2 & (var(7) := 2) & (var(8) := 2)
+ignorehitpause = 1
 [State 10371, LP+MP init]
 type = VarSet
 trigger1 = (command = "x" && command = "y")
 var(30) = 2
+ignorehitpause = 1
 [State 10371, LP+HP init]
 type = VarSet
 triggerall = !Var(31)
 trigger1 = (var(7) && var(9))
 var(31) = 2 & (var(7) := 2) & (var(9) := 2)
+ignorehitpause = 1
 [State 10371, LP+HP init]
 type = VarSet
 trigger1 = (command = "x" && command = "z")
 var(31) = 2
+ignorehitpause = 1
 [State 10371, MP+HP init]
 type = VarSet
 triggerall = !Var(32)
 trigger1 = (var(8) && var(9))
 var(32) = 2 & (var(8) := 2) & (var(9) := 2)
+ignorehitpause = 1
 [State 10371, MP+HP init]
 type = VarSet
 trigger1 = (command = "y" && command = "z")
 var(32) = 2
+ignorehitpause = 1
 
 [State 10371, LK+MK init]
 type = VarSet
 triggerall = !Var(33)
 trigger1 = (var(10) && var(11))
 var(33) = 2 & (var(10) := 2) & (var(11) := 2)
+ignorehitpause = 1
 [State 10371, LK+MK init]
 type = VarSet
 trigger1 = (command = "a" && command = "b")
 var(33) = 2
+ignorehitpause = 1
 [State 10371, LK+HK init]
 type = VarSet
 triggerall = !Var(34)
 trigger1 = (var(10) && var(12))
 var(34) = 2 & (var(10) := 2) & (var(12) := 2)
+ignorehitpause = 1
 [State 10371, LK+HK init]
 type = VarSet
 trigger1 = (command = "a" && command = "c")
 var(34) = 2
+ignorehitpause = 1
 [State 10371, MK+HK init]
 type = VarSet
 triggerall = !Var(35)
 trigger1 = (var(11) && var(12))
 var(35) = 2 & (var(11) := 2) & (var(12) := 2)
+ignorehitpause = 1
 [State 10371, MK+HK init]
 type = VarSet
 trigger1 = (command = "b" && command = "c")
 var(35) = 2
+ignorehitpause = 1
 
 [State 10371, LP+LK init]
 type = VarSet
